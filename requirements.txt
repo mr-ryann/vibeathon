@@ -5,6 +5,7 @@ langchain==0.2.14
 langchain-groq==0.1.9
 langchain-community==0.2.12
 anthropic==0.34.2
+google-generativeai==0.8.0
 
 # APIs & Integrations
 tweepy==4.14.0

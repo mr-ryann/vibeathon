@@ -311,7 +311,8 @@ def get_api_key(service: str) -> str:
         'anthropic': 'ANTHROPIC_API_KEY',
         'serper': 'SERPER_API_KEY',
         'twitter': 'TWITTER_BEARER_TOKEN',
-        'gmail': 'GMAIL_CREDENTIALS_PATH'
+        'gmail': 'GMAIL_CREDENTIALS_PATH',
+        'gemini': 'GEMINI_API_KEY'
     }
     
     env_var = key_mapping.get(service.lower())

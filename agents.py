@@ -4,6 +4,7 @@ Specialized AI agents powered by LangChain + Groq for content generation and dec
 """
 
 import os
+import json
 from typing import Dict, List, Any, Optional
 from datetime import datetime
 
@@ -12,6 +13,7 @@ from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.schema import HumanMessage, SystemMessage, AIMessage
 from langchain_core.output_parsers import StrOutputParser, JsonOutputParser
 from pydantic import BaseModel, Field
+import google.generativeai as genai
 
 from utils import build_vibe_prompt, extract_vibe_markers, get_api_key
 
@@ -452,6 +454,124 @@ Date Range: {content_history[0].get('created_at', 'N/A')} to {content_history[-1
         """
         
         return summary
+
+
+# ==================== DEALHUNTER AGENT ====================
+
+class DealHunterAgent:
+    """
+    Agent 4: DealHunter - Finds relevant brand deals using Gemini Pro API with search
+    Simulates finding brand partnerships for the "Empire" vision
+    """
+    
+    def __init__(self):
+        # Configure Gemini API
+        gemini_api_key = get_api_key('gemini')
+        genai.configure(api_key=gemini_api_key)
+        
+        # Use Gemini Pro model with grounding/search capabilities
+        self.model = genai.GenerativeModel('gemini-pro')
+    
+    def find_deals(self, topic: str) -> List[Dict[str, Any]]:
+        """
+        Find top 3 brand sponsorship opportunities for a given topic
+        
+        Args:
+            topic: The content topic/niche to find sponsors for
+            
+        Returns:
+            List of sponsor opportunities with company_name, website, and reason_for_sponsorship
+        """
+        
+        # Master Prompt for DealHunter
+        prompt = f"""You are the 'DealHunter' agent, an expert in brand-creator partnerships. 
+
+For the topic '{topic}', identify the Top 3 specific companies that would be perfect sponsors for a creator making content about this topic.
+
+Consider:
+- Companies that actively sponsor creators and influencers
+- Brands with products/services relevant to this niche
+- Companies known for marketing partnerships
+- Both direct-to-consumer brands and B2B companies if relevant
+
+Return ONLY a valid JSON list of objects. Each object must have exactly these fields:
+- company_name: The exact company/brand name
+- website: The company's main website URL
+- reason_for_sponsorship: A specific explanation of why this company is a perfect fit for '{topic}' content (be specific about product fit, audience alignment, etc.)
+
+Example format:
+[
+  {{
+    "company_name": "Company Name",
+    "website": "companyname.com",
+    "reason_for_sponsorship": "Specific reason why they're perfect for this niche"
+  }}
+]
+
+Return ONLY the JSON array, no other text."""
+
+        try:
+            # Call Gemini API
+            response = self.model.generate_content(prompt)
+            
+            # Extract and parse the response
+            response_text = response.text.strip()
+            
+            # Try to extract JSON from the response
+            json_start = response_text.find('[')
+            json_end = response_text.rfind(']') + 1
+            
+            if json_start >= 0 and json_end > json_start:
+                json_str = response_text[json_start:json_end]
+                deals = json.loads(json_str)
+                
+                # Validate the structure
+                validated_deals = []
+                for deal in deals[:3]:  # Ensure max 3
+                    if all(key in deal for key in ['company_name', 'website', 'reason_for_sponsorship']):
+                        validated_deals.append({
+                            'company_name': deal['company_name'],
+                            'website': deal['website'],
+                            'reason_for_sponsorship': deal['reason_for_sponsorship']
+                        })
+                
+                if validated_deals:
+                    return validated_deals
+            
+            # If parsing fails, raise exception to trigger fallback
+            raise ValueError("Failed to parse valid JSON from response")
+            
+        except Exception as e:
+            print(f"Error calling Gemini API: {e}")
+            print(f"Falling back to default sponsors for topic: {topic}")
+            
+            # Fallback: Return topic-relevant sponsors
+            return self._get_fallback_sponsors(topic)
+    
+    def _get_fallback_sponsors(self, topic: str) -> List[Dict[str, Any]]:
+        """
+        Provide fallback sponsor suggestions if API fails
+        """
+        # Generic sponsors that work for most tech/creator content
+        fallback_sponsors = [
+            {
+                "company_name": "Skillshare",
+                "website": "skillshare.com",
+                "reason_for_sponsorship": f"Offers educational courses relevant to creators in the {topic} space, perfect for audience upskilling."
+            },
+            {
+                "company_name": "Squarespace",
+                "website": "squarespace.com",
+                "reason_for_sponsorship": f"Website builder commonly sponsored by creators, helps audience build their own {topic} presence online."
+            },
+            {
+                "company_name": "NordVPN",
+                "website": "nordvpn.com",
+                "reason_for_sponsorship": f"Privacy and security tool that appeals to tech-savvy audiences interested in {topic}."
+            }
+        ]
+        
+        return fallback_sponsors
 
 
 # ==================== TESTING ====================

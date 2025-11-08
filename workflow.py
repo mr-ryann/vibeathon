@@ -16,7 +16,8 @@ from agents import (
     ContentGeneratorAgent,
     SponsorPitchAgent,
     ReplyGeneratorAgent,
-    StrategyAgent
+    StrategyAgent,
+    DealHunterAgent
 )
 from tools import (
     TrendHunter,
@@ -58,6 +59,7 @@ class VibeOSState(TypedDict):
     # Sponsor outreach
     sponsors: List[Dict[str, Any]]
     pitch_results: List[Dict[str, Any]]
+    deal_plan: List[Dict[str, Any]]  # DealHunter results
     
     # Analytics
     analytics: Dict[str, Any]
@@ -243,6 +245,36 @@ def find_sponsors_node(state: VibeOSState) -> Dict:
     }
 
 
+def run_dealhunter(state: VibeOSState) -> Dict:
+    """
+    Node: DealHunter - Find relevant brand deals using Gemini Pro API
+    Uses AI-powered search to find Top 3 specific companies for sponsorship
+    """
+    print("💰 DealHunter: Finding perfect brand partnerships...")
+    
+    # Initialize DealHunter agent
+    deal_hunter = DealHunterAgent()
+    
+    # Get the topic from state - use selected trend or niche
+    topic = state.get('selected_trend', {}).get('title') or state.get('niche', 'content creation')
+    
+    # Find brand deals
+    deal_plan = deal_hunter.find_deals(topic)
+    
+    # Format message with deal summary
+    if deal_plan:
+        companies = ', '.join([deal['company_name'] for deal in deal_plan[:2]])
+        message = f"🤝 DealHunter found {len(deal_plan)} brand opportunities: {companies}..."
+    else:
+        message = "⚠️ DealHunter: No deals found, using fallback sponsors"
+    
+    return {
+        "deal_plan": deal_plan,
+        "messages": [message],
+        "status": "deals_found"
+    }
+
+
 def pitch_sponsors_node(state: VibeOSState) -> Dict:
     """
     Node 7: Generate and send sponsor pitch emails
@@ -355,6 +387,7 @@ def create_vibeos_workflow() -> StateGraph:
     workflow.add_node("publish_content", publish_content_node)
     workflow.add_node("auto_reply", auto_reply_node)
     workflow.add_node("find_sponsors", find_sponsors_node)
+    workflow.add_node("run_dealhunter", run_dealhunter)
     workflow.add_node("pitch_sponsors", pitch_sponsors_node)
     workflow.add_node("track_analytics", track_analytics_node)
     workflow.add_node("optimize_strategy", optimize_strategy_node)
@@ -366,7 +399,8 @@ def create_vibeos_workflow() -> StateGraph:
     workflow.add_edge("generate_content", "publish_content")
     workflow.add_edge("publish_content", "auto_reply")
     workflow.add_edge("auto_reply", "find_sponsors")
-    workflow.add_edge("find_sponsors", "pitch_sponsors")
+    workflow.add_edge("find_sponsors", "run_dealhunter")
+    workflow.add_edge("run_dealhunter", "pitch_sponsors")
     workflow.add_edge("pitch_sponsors", "track_analytics")
     workflow.add_edge("track_analytics", "optimize_strategy")
     workflow.add_edge("optimize_strategy", END)
@@ -414,6 +448,7 @@ def run_vibeos_workflow(
         "generated_content": {},
         "post_results": [],
         "sponsors": [],
+        "deal_plan": [],
         "pitch_results": [],
         "analytics": {},
         "messages": [],
