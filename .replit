@@ -43,6 +43,6 @@ waitForPort = 5000
 outputType = "webview"
 
 [deployment]
-deploymentTarget = "autoscale"
+deploymentTarget = "cloudrun"
 run = ["bash", "-c", "uvicorn backend_server:app --host 0.0.0.0 --port 8000 & cd frontend && npm run preview -- --host 0.0.0.0 --port 5000"]
 build = ["cd", "frontend", "&&", "npm", "run", "build"]
