@@ -40,7 +40,7 @@ except ImportError as e:
                 hashtags: list = ["trending", "viral"]
                 hook: str = "Attention-grabbing hook"
                 thumbnail_prompt: str = "Image prompt"
-        return MockContent()
+            return MockContent()
     agent_script = MockContentGenerator
     class SponsorFinder:
         def find_sponsors(self, niche, content_type):
@@ -217,8 +217,8 @@ async def generate_script(request: ScriptGenerateRequest):
             "content_formula": "hook → valuable info → call to action"
         }
         
-    # Generate content using agent_script alias
-    generator = agent_script(vibe_profile)
+        # Generate content using agent_script alias
+        generator = agent_script(vibe_profile)
         content = generator.generate_content(request.trend, platform="youtube")
         
         # Format script for frontend
@@ -429,7 +429,7 @@ async def startup_event():
 if __name__ == "__main__":
     uvicorn.run(
         "backend_server:app",
-        host="0.0.0.0",
+        host="localhost",
         port=8000,
         reload=True  # Auto-reload on code changes
     )
