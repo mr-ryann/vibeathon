@@ -6,5 +6,5 @@ __pycache__/
 venv/
 *.db
 youtube_credentials.json
-
+*.toml
 uploads/
