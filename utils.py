@@ -160,6 +160,50 @@ class VibeDatabase:
         conn.commit()
         conn.close()
         return content_id
+
+    def get_recent_scripts(self, limit: int = 10) -> List[Dict[str, Any]]:
+        """Fetch recently generated scripts with engagement metrics"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute(
+            """
+                SELECT content_id, user_id, platform, script, caption, hashtags,
+                       trend_source, created_at, posted_at, engagement_rate,
+                       likes, comments, shares
+                FROM generated_content
+                ORDER BY datetime(created_at) DESC
+                LIMIT ?
+            """,
+            (limit,)
+        )
+        rows = cursor.fetchall()
+        conn.close()
+
+        recent_scripts: List[Dict[str, Any]] = []
+        for row in rows:
+            hashtags_raw = row[5]
+            try:
+                hashtags = json.loads(hashtags_raw) if hashtags_raw else []
+            except json.JSONDecodeError:
+                hashtags = []
+
+            recent_scripts.append({
+                "content_id": row[0],
+                "user_id": row[1],
+                "platform": row[2],
+                "script": row[3],
+                "caption": row[4],
+                "hashtags": hashtags,
+                "trend_source": row[6],
+                "created_at": row[7],
+                "posted_at": row[8],
+                "engagement_rate": row[9] or 0,
+                "likes": row[10] or 0,
+                "comments": row[11] or 0,
+                "shares": row[12] or 0
+            })
+
+        return recent_scripts
     
     def get_user_analytics(self, user_id: str, days: int = 30) -> pd.DataFrame:
         """Get user analytics for dashboard"""

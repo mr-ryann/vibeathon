@@ -1,5 +1,5 @@
 """
-FastAPI Server for CreatorForge Nexus
+FastAPI Server for Nexus
 
 Updated for two-phase architecture:
 - POST /generate-script - Phase 1: Generate script
@@ -21,7 +21,7 @@ from nexus_core import run_nexus_phase1, run_nexus_phase2, db
 
 # Initialize FastAPI app
 app = FastAPI(
-    title="CreatorForge Nexus API",
+    title="Nexus API",
     description="Two-phase multi-agent content creation system powered by LangGraph",
     version="2.0.0"
 )
@@ -89,7 +89,7 @@ class VideoProcessResponse(BaseModel):
 async def root():
     """API health check"""
     return {
-        "service": "CreatorForge Nexus API",
+        "service": "Nexus API",
         "version": "2.0.0",
         "status": "running",
         "architecture": "two-phase",
@@ -252,7 +252,7 @@ async def health_check():
 # --- Main execution ---
 if __name__ == "__main__":
     print("=" * 80)
-    print("🚀 CreatorForge Nexus API Server")
+    print("🚀 Nexus API Server")
     print("=" * 80)
     print("")
     print("📡 Starting FastAPI server...")

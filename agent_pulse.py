@@ -30,7 +30,7 @@ genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
 # --- GraphState Definition ---
 class GraphState(TypedDict):
     """
-    The shared state of the CreatorForge Nexus.
+    The shared state of the Nexus.
     """
     user_vibe: str
     niche: str

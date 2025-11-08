@@ -574,6 +574,35 @@ Return ONLY the JSON array, no other text."""
         return fallback_sponsors
 
 
+# ==================== PUBLIC API ALIASES ====================
+
+# Expose agent entry points following agent_<name> convention while keeping
+# the original class names available for compatibility with legacy imports.
+agent_vibe = VibeAnalyzerAgent
+agent_script = ContentGeneratorAgent
+agent_sponsor = SponsorPitchAgent
+agent_reply = ReplyGeneratorAgent
+agent_strategy = StrategyAgent
+agent_dealhunter = DealHunterAgent
+
+__all__ = [
+    "agent_vibe",
+    "agent_script",
+    "agent_sponsor",
+    "agent_reply",
+    "agent_strategy",
+    "agent_dealhunter",
+    "VibeAnalyzerAgent",
+    "ContentGeneratorAgent",
+    "SponsorPitchAgent",
+    "ReplyGeneratorAgent",
+    "StrategyAgent",
+    "DealHunterAgent",
+    "ContentOutput",
+    "SponsorPitch"
+]
+
+
 # ==================== TESTING ====================
 
 if __name__ == "__main__":
@@ -589,7 +618,7 @@ if __name__ == "__main__":
         "POV: you just discovered the life hack that changes everything 🤯"
     ]
     
-    analyzer = VibeAnalyzerAgent()
+    analyzer = agent_vibe()
     vibe = analyzer.analyze_vibe(samples)
     
     print(f"Detected Tone: {vibe.get('tone')}")
@@ -606,7 +635,7 @@ if __name__ == "__main__":
         "relevance_score": 8.5
     }
     
-    generator = ContentGeneratorAgent(vibe)
+    generator = agent_script(vibe)
     content = generator.generate_content(trend, platform="tiktok")
     
     print(f"Hook: {content.hook}")

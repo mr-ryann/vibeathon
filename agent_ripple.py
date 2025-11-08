@@ -31,7 +31,7 @@ SERPER_ENDPOINT = "https://google.serper.dev/search"
 # --- GraphState Definition ---
 class GraphState(TypedDict):
     """
-    The shared state of the CreatorForge Nexus.
+    The shared state of the Nexus.
     """
     user_vibe: str
     niche: str

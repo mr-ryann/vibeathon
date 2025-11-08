@@ -12,12 +12,12 @@ from langgraph.graph import StateGraph, END
 from langchain_core.messages import HumanMessage, AIMessage
 
 from agents import (
-    VibeAnalyzerAgent,
-    ContentGeneratorAgent,
-    SponsorPitchAgent,
-    ReplyGeneratorAgent,
-    StrategyAgent,
-    DealHunterAgent
+    agent_vibe,
+    agent_script,
+    agent_sponsor,
+    agent_reply,
+    agent_strategy,
+    agent_dealhunter
 )
 from tools import (
     TrendHunter,
@@ -77,7 +77,7 @@ def analyze_vibe_node(state: VibeOSState) -> Dict:
     """
     print("📊 Analyzing your vibe...")
     
-    analyzer = VibeAnalyzerAgent()
+    analyzer = agent_vibe()
     vibe_profile = analyzer.analyze_vibe(state['content_samples'])
     
     # Save to database
@@ -131,7 +131,7 @@ def generate_content_node(state: VibeOSState) -> Dict:
     """
     print("✨ Generating content in your voice...")
     
-    generator = ContentGeneratorAgent(state['vibe_profile'])
+    generator = agent_script(state['vibe_profile'])
     
     # Generate for primary platform (or first in list)
     primary_platform = state['platforms'][0] if state['platforms'] else "tiktok"
@@ -253,7 +253,7 @@ def run_dealhunter(state: VibeOSState) -> Dict:
     print("💰 DealHunter: Finding perfect brand partnerships...")
     
     # Initialize DealHunter agent
-    deal_hunter = DealHunterAgent()
+    deal_hunter = agent_dealhunter()
     
     # Get the topic from state - use selected trend or niche
     topic = state.get('selected_trend', {}).get('title') or state.get('niche', 'content creation')
@@ -288,7 +288,7 @@ def pitch_sponsors_node(state: VibeOSState) -> Dict:
         "engagement_rate": "high engagement"
     }
     
-    pitch_agent = SponsorPitchAgent(state['vibe_profile'], user_stats)
+    pitch_agent = agent_sponsor(state['vibe_profile'], user_stats)
     email_sender = EmailSender()
     
     pitch_results = []
@@ -356,7 +356,7 @@ def optimize_strategy_node(state: VibeOSState) -> Dict:
     """
     print("🧠 Optimizing strategy...")
     
-    strategy_agent = StrategyAgent()
+    strategy_agent = agent_strategy()
     
     # Get historical content (from database)
     # For MVP, use current content as sample
