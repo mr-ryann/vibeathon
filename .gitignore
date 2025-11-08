@@ -1,10 +1,39 @@
+# Environment variables
 .env.*
+.env
+.env.local
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv
+*.db
+*.sqlite3
+
+# Node.js / Frontend
+node_modules/
+npm-debug.log*
+dist/
+.cache/
+
+# Credentials
+youtube_credentials.json
+credentials.json
+token.json
+
+# Uploads
+uploads/
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Documentation - keep README and replit.md
 *.md
 !README.md
-.env
-__pycache__/
-venv/
-*.db
-youtube_credentials.json
+!replit.md
+
+# Config
 *.toml
-uploads/
