@@ -2,3 +2,6 @@
 *.md
 !README.md
 .env
+__pycache__/
+venv/
+*.db
