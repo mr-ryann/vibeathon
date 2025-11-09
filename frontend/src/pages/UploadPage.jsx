@@ -70,7 +70,7 @@ export default function UploadPage() {
                                         className="script-output"
                                         value={scriptText}
                                         onChange={(event) => setScriptText(event.target.value)}
-                                        placeholder="Paste the Nexus script output here"
+                                        placeholder=""
                                 />
 
                                 <ButtonArrowDown type="submit" disabled={isBusy}>
