@@ -36,6 +36,26 @@ export default function ScriptPage() {
     sessionStorage.setItem('nexus_vibe', vibe);
   }, [vibe]);
 
+  // Load selected trend from session storage on mount
+  useEffect(() => {
+    const storedTrend = sessionStorage.getItem('nexus_selectedTrend');
+    if (storedTrend && !selectedTrend) {
+      try {
+        const parsedTrend = JSON.parse(storedTrend);
+        setSelectedTrend(parsedTrend);
+      } catch (e) {
+        console.error('Failed to parse stored trend:', e);
+      }
+    }
+  }, [selectedTrend, setSelectedTrend]);
+
+  // Save selected trend to session storage whenever it changes
+  useEffect(() => {
+    if (selectedTrend) {
+      sessionStorage.setItem('nexus_selectedTrend', JSON.stringify(selectedTrend));
+    }
+  }, [selectedTrend]);
+
   useEffect(() => {
     if (trends.length === 0 && !selectedTrend) {
       setErrorMessage("Please fetch trends first before generating scripts.");

@@ -43,7 +43,7 @@ except ImportError as e:
             return MockContent()
     agent_script = MockContentGenerator
     class SponsorFinder:
-        def find_sponsors(self, niche, content_type):
+        def find_sponsors(self, niche, num_sponsors=3):
             return []
 
 # Initialize FastAPI app
@@ -242,7 +242,7 @@ HASHTAGS: {' '.join(['#' + tag for tag in content.hashtags[:5]])}
         sponsor_finder = SponsorFinder()
         sponsors = sponsor_finder.find_sponsors(
             niche=request.trend.get('title', ''),
-            content_type="short-form video"
+            num_sponsors=3
         )
         
         # Format sponsors for frontend

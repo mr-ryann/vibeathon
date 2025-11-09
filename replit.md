@@ -21,6 +21,8 @@ Nexus is an AI-powered content creation platform that helps creators build their
   - Added session storage to preserve text inputs across page reloads:
     - TrendsPage: niche and growth goal inputs persist
     - ScriptPage: vibe input persists
+    - ScriptPage: selected trend now persists in dropdown menu
+  - Fixed backend SponsorFinder API call: changed incorrect `content_type` parameter to `num_sponsors`
   - Fixed TrendHunter.get_best_trends() to accept limit parameter
   - Fixed SERPER_API_KEY environment variable references
 - **2025-11-08**: Initial Replit setup completed
