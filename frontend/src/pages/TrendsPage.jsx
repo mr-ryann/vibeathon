@@ -89,7 +89,7 @@ export default function TrendsPage() {
         </div>
       </form>
 
-      {isBusy ? <DotLoader label="Nexus scouting live data" /> : null}
+      {isBusy ? <DotLoader label="ripple agent scouting live trends" /> : null}
 
       {trends.length ? (
         <div className="grid trends" style={{ marginTop: "2rem" }}>

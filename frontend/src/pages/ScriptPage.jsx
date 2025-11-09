@@ -100,7 +100,7 @@ export default function ScriptPage() {
         </div>
       </form>
 
-      {isBusy ? <DotLoader label="Nexus drafting multi-part script" /> : null}
+      {isBusy ? <DotLoader label="quill agent drafting your script" /> : null}
 
       {scriptResult?.script ? (
         <div className="field-group" style={{ marginTop: "2rem" }}>

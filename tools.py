@@ -141,9 +141,9 @@ class TrendHunter:
             print(f"Error fetching Twitter trends: {e}")
             return []
     
-    def get_best_trends(self, niche: str) -> List[Dict[str, Any]]:
+    def get_best_trends(self, niche: str, limit: int = 5) -> List[Dict[str, Any]]:
         """
-        Combine trends from multiple sources and return top 5
+        Combine trends from multiple sources and return top trends
         """
         all_trends = []
         
@@ -155,9 +155,9 @@ class TrendHunter:
         twitter_trends = self.get_twitter_trends(niche)
         all_trends.extend(twitter_trends)
         
-        # Sort by relevance and return top 5
+        # Sort by relevance and return top results
         all_trends.sort(key=lambda x: x.get('relevance_score', 0), reverse=True)
-        return all_trends[:5]
+        return all_trends[:limit]
 
 
 # ==================== SOCIAL MEDIA POSTING TOOLS ====================

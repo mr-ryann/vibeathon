@@ -6,25 +6,29 @@ import { useNavigate } from "react-router-dom";
 const workflowCards = [
   {
     title: "BuzzFind",
-    description: "Discover the highest-velocity trends across your niche with Nexus agents.",
+    description: "Discover the highest-velocity trends across your niche with ripple, your trend scout.",
+    agent: "ripple",
     cta: "Explore trends",
     to: "/trends"
   },
   {
     title: "Script Forge",
-    description: "Generate hooks, scripts, captions, and sponsor pitches in one pass.",
+    description: "Generate hooks, scripts, captions with quill, your creative writer.",
+    agent: "quill",
     cta: "Open script lab",
     to: "/script"
   },
   {
     title: "ShareBlast",
-    description: "Clip raw videos into platform-ready shorts and prep auto-publishing.",
+    description: "Clip raw videos into platform-ready shorts powered by core intelligence.",
+    agent: "core",
     cta: "Process video",
     to: "/upload"
   },
   {
     title: "SignalPulse",
-    description: "Track performance and feed outcomes back into Nexus for iteration.",
+    description: "Track performance with pulse and connect to sponsors via envoy.",
+    agent: "pulse + envoy",
     cta: "View analytics",
     to: "/analytics"
   }
@@ -57,6 +61,9 @@ export default function DashboardPage() {
           <article key={card.title} className="dashboard-card">
             <header>
               <h3>{card.title}</h3>
+              <span className="toast" style={{ fontSize: '0.75rem', marginTop: '0.25rem' }}>
+                Agent: {card.agent}
+              </span>
             </header>
             <p>{card.description}</p>
             <ButtonArrowDown onClick={() => navigate(card.to)}>{card.cta}</ButtonArrowDown>
