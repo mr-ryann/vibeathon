@@ -43,16 +43,15 @@ VibeOS is an AI-powered content creation platform that helps creators build thei
 ## Running the Project
 
 ### Development Mode
-The frontend is already running via the configured workflow. To start the backend:
+The frontend is already running via the configured workflow on port 5000.
+
+**To start the backend**, open a new Shell tab and run:
 
 ```bash
-./start_backend.sh
+python run_backend.py
 ```
 
-Or manually:
-```bash
-uvicorn backend_server:app --host localhost --port 8000 --reload
-```
+This will start the backend API server on port 8000. The frontend will automatically connect to it.
 
 ### Required Environment Variables
 The project requires several API keys to function:

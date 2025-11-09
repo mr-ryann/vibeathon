@@ -1,11 +1,9 @@
 import axios from "axios";
 
-// In Replit, the backend runs on the same domain but different port
-// Use relative URL path to avoid CORS issues
-const API_BASE_URL = import.meta.env.VITE_API_URL || 
-  (window.location.hostname.includes('replit') 
-    ? `https://${window.location.hostname.replace(/:\d+/, '')}` 
-    : "http://localhost:8000");
+// Backend API URL configuration
+// In development: http://localhost:8000
+// In Replit deployment: will use same domain
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
