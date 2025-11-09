@@ -804,7 +804,7 @@ def render_sidebar():
         st.markdown("## ⚙️ Settings")
         
         # Serper API status
-        serper_key = os.getenv("GOOGLE_SERPER_API_KEY")
+        serper_key = os.getenv("SERPER_API_KEY")
         if serper_key:
             st.success("✅ Google Serper connected")
         else:

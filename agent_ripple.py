@@ -24,7 +24,7 @@ if "GEMINI_API_KEY" not in os.environ:
 genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
 
 # Google Serper API configuration
-SERPER_API_KEY = os.getenv("GOOGLE_SERPER_API_KEY")
+SERPER_API_KEY = os.getenv("SERPER_API_KEY")
 SERPER_ENDPOINT = "https://google.serper.dev/search"
 
 
