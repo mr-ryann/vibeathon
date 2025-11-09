@@ -54,12 +54,13 @@ class BaseAgent:
         return response.content
 
 
-# ==================== VIBE ANALYZER AGENT ====================
+# ==================== RIPPLE AGENT ====================
 
 class VibeAnalyzerAgent(BaseAgent):
     """
-    Analyzes user's content samples to extract their unique voice/style
+    ripple: Analyzes user's content samples to extract their unique voice/style
     Uses Claude for high-quality analysis
+    Name: ripple - like ripples spreading outward, detecting the unique patterns in content
     """
     
     def __init__(self):
@@ -134,11 +135,12 @@ Return your analysis in JSON format with these keys:
         return full_vibe
 
 
-# ==================== CONTENT GENERATOR AGENT ====================
+# ==================== QUILL AGENT ====================
 
 class ContentGeneratorAgent(BaseAgent):
     """
-    Generates viral content (scripts, captions, hooks) in user's exact voice
+    quill: Generates viral content (scripts, captions, hooks) in user's exact voice
+    Name: quill - the writer's tool, crafting stories from raw trends
     """
     
     def __init__(self, vibe_profile: Dict[str, Any]):
@@ -242,11 +244,12 @@ CRITICAL: This must sound like YOU, not generic AI. Use your tone, humor, and st
             )
 
 
-# ==================== SPONSOR PITCH AGENT ====================
+# ==================== PULSE AGENT ====================
 
 class SponsorPitchAgent(BaseAgent):
     """
-    Writes personalized sponsor pitch emails in user's voice
+    pulse: Writes personalized sponsor pitch emails in user's voice
+    Name: pulse - the steady heartbeat of engagement and outreach
     """
     
     def __init__(self, vibe_profile: Dict[str, Any], user_stats: Dict[str, Any]):
@@ -319,11 +322,12 @@ Return ONLY valid JSON:
             )
 
 
-# ==================== REPLY GENERATOR AGENT ====================
+# ==================== PULSE REPLY AGENT ====================
 
 class ReplyGeneratorAgent(BaseAgent):
     """
-    Generates authentic replies to comments in user's voice
+    pulse: Generates authentic replies to comments in user's voice
+    Name: pulse - maintaining the rhythm of audience engagement
     """
     
     def __init__(self, vibe_profile: Dict[str, Any]):
@@ -368,11 +372,12 @@ Just return the reply text, nothing else."""
         return reply
 
 
-# ==================== STRATEGY AGENT ====================
+# ==================== CORE STRATEGY AGENT ====================
 
 class StrategyAgent(BaseAgent):
     """
-    Makes high-level decisions about content strategy and optimization
+    core: Makes high-level decisions about content strategy and optimization
+    Name: core - the central brain, making strategic decisions
     """
     
     def __init__(self):
@@ -456,12 +461,13 @@ Date Range: {content_history[0].get('created_at', 'N/A')} to {content_history[-1
         return summary
 
 
-# ==================== DEALHUNTER AGENT ====================
+# ==================== ENVOY AGENT ====================
 
 class DealHunterAgent:
     """
-    Agent 4: DealHunter - Finds relevant brand deals using Gemini Pro API with search
+    envoy: Finds relevant brand deals using Gemini Pro API with search
     Simulates finding brand partnerships for the "Empire" vision
+    Name: envoy - the ambassador, forging partnerships and deals
     """
     
     def __init__(self):
@@ -483,8 +489,8 @@ class DealHunterAgent:
             List of sponsor opportunities with company_name, website, and reason_for_sponsorship
         """
         
-        # Master Prompt for DealHunter
-        prompt = f"""You are the 'DealHunter' agent, an expert in brand-creator partnerships. 
+        # Master Prompt for envoy
+        prompt = f"""You are the 'envoy' agent, an expert in brand-creator partnerships. 
 
 For the topic '{topic}', identify the Top 3 specific companies that would be perfect sponsors for a creator making content about this topic.
 

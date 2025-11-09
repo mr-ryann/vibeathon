@@ -59,7 +59,7 @@ class VibeOSState(TypedDict):
     # Sponsor outreach
     sponsors: List[Dict[str, Any]]
     pitch_results: List[Dict[str, Any]]
-    deal_plan: List[Dict[str, Any]]  # DealHunter results
+    deal_plan: List[Dict[str, Any]]  # envoy results
     
     # Analytics
     analytics: Dict[str, Any]
@@ -247,12 +247,12 @@ def find_sponsors_node(state: VibeOSState) -> Dict:
 
 def run_dealhunter(state: VibeOSState) -> Dict:
     """
-    Node: DealHunter - Find relevant brand deals using Gemini Pro API
+    Node: envoy - Find relevant brand deals using Gemini Pro API
     Uses AI-powered search to find Top 3 specific companies for sponsorship
     """
-    print("💰 DealHunter: Finding perfect brand partnerships...")
+    print("💰 envoy: Finding perfect brand partnerships...")
     
-    # Initialize DealHunter agent
+    # Initialize envoy agent
     deal_hunter = agent_dealhunter()
     
     # Get the topic from state - use selected trend or niche
@@ -264,9 +264,9 @@ def run_dealhunter(state: VibeOSState) -> Dict:
     # Format message with deal summary
     if deal_plan:
         companies = ', '.join([deal['company_name'] for deal in deal_plan[:2]])
-        message = f"🤝 DealHunter found {len(deal_plan)} brand opportunities: {companies}..."
+        message = f"🤝 envoy found {len(deal_plan)} brand opportunities: {companies}..."
     else:
-        message = "⚠️ DealHunter: No deals found, using fallback sponsors"
+        message = "⚠️ envoy: No deals found, using fallback sponsors"
     
     return {
         "deal_plan": deal_plan,

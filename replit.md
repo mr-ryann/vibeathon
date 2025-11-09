@@ -6,6 +6,13 @@ Nexus is an AI-powered content creation platform that helps creators build their
 **Current State:** Successfully imported and configured for Replit environment.
 
 ## Recent Changes
+- **2025-11-09**: Agent naming update
+  - Renamed all AI agents to new branded names:
+    - ripple (trend scout & vibe analyzer)
+    - quill (script generator)
+    - pulse (engagement & sponsor outreach)
+    - envoy (brand partnership finder)
+    - core (strategic orchestrator)
 - **2025-11-08**: Initial Replit setup completed
   - Configured frontend to run on port 5000 for Replit webview
   - Updated Vite config to allow all hosts for Replit proxy
@@ -34,6 +41,36 @@ Nexus is an AI-powered content creation platform that helps creators build their
   - AI content generation in user's voice
   - Sponsor matching and email outreach
   - Video processing and clipping
+
+### AI Agents
+Nexus uses five specialized AI agents:
+
+1. **ripple** - Trend Scout & Vibe Analyzer
+   - Analyzes content samples to extract creator's unique voice
+   - Like ripples spreading outward, detects unique patterns in content
+   - Class: `VibeAnalyzerAgent`
+
+2. **quill** - Script Generator
+   - Generates viral scripts, captions, and hooks in creator's voice
+   - The writer's tool, crafting stories from raw trends
+   - Class: `ContentGeneratorAgent`
+
+3. **pulse** - Engagement & Sponsor Outreach
+   - Writes personalized sponsor pitch emails
+   - Generates authentic comment replies
+   - The steady heartbeat of engagement and outreach
+   - Classes: `SponsorPitchAgent`, `ReplyGeneratorAgent`
+
+4. **envoy** - Brand Partnership Finder
+   - Finds relevant brand deals using Gemini Pro API
+   - The ambassador, forging partnerships and deals
+   - Class: `DealHunterAgent`
+
+5. **core** - Strategic Orchestrator
+   - Makes high-level content strategy decisions
+   - Analyzes performance and provides optimization recommendations
+   - The central brain of the operation
+   - Class: `StrategyAgent`
 
 ### Alternative UI (Streamlit)
 - **Location:** `nexus_ui.py`, `ui.py`, `main.py`

@@ -142,9 +142,11 @@ async def health_check():
         "status": "healthy",
         "database": "connected" if db else "error",
         "agents": {
-            "vibe_analyzer": "ready",
-            "content_generator": "ready",
-            "deal_hunter": "ready"
+            "ripple": "ready",
+            "quill": "ready",
+            "pulse": "ready",
+            "envoy": "ready",
+            "core": "ready"
         },
         "tools": {
             "trend_hunter": "ready",
