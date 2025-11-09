@@ -81,7 +81,7 @@ def run_quill(state: GraphState) -> GraphState:
 
     # Initialize the Gemini model
     model = genai.GenerativeModel(
-        model_name='gemini-2.0-flash-exp',
+        model_name='gemini-2.5-flash',
         generation_config={
             "temperature": 0.8,  # Higher creativity for content generation
             "response_mime_type": "application/json"
