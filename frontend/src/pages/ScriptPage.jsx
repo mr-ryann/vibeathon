@@ -89,7 +89,7 @@ export default function ScriptPage() {
           label="Creator vibe"
           value={vibe}
           onChange={(event) => setVibe(event.target.value)}
-          placeholder="How should Nexus sound?"
+          placeholder=""
           suggestions={VIBE_SUGGESTIONS}
         />
 

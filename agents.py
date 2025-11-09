@@ -41,17 +41,28 @@ class SponsorPitch(BaseModel):
 class BaseAgent:
     """Base class for all AI agents"""
     
-    def __init__(self, model_name: str = "llama-3.1-70b-versatile", temperature: float = 0.7):
-        self.llm = ChatGroq(
-            groq_api_key=get_api_key('groq'),
-            model_name=model_name,
-            temperature=temperature
-        )
+    def __init__(self, model_name: str = "gemini-1.5-flash", temperature: float = 0.7):
+        # Configure Gemini instead of Groq
+        gemini_key = os.getenv("GEMINI_API_KEY")
+        if not gemini_key:
+            raise ValueError("Missing GEMINI_API_KEY in environment variables")
+        genai.configure(api_key=gemini_key)
+        self.model = genai.GenerativeModel(model_name)
+        self.temperature = temperature
     
     def invoke(self, messages: List) -> str:
         """Invoke LLM with messages"""
-        response = self.llm.invoke(messages)
-        return response.content
+        # Convert messages to Gemini format
+        prompt_parts = []
+        for msg in messages:
+            if hasattr(msg, 'content'):
+                prompt_parts.append(msg.content)
+            else:
+                prompt_parts.append(str(msg))
+        
+        prompt = "\n\n".join(prompt_parts)
+        response = self.model.generate_content(prompt)
+        return response.text
 
 
 # ==================== RIPPLE AGENT ====================

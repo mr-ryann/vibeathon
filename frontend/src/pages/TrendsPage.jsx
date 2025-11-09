@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BrainCircuit } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { fetchTrends } from "../services/api.js";
 import { useAppContext } from "../context/AppContext.jsx";
 import AIInput from "../components/ui/AIInput.jsx";
@@ -28,6 +29,7 @@ export default function TrendsPage() {
     isBusy
   } = useAppContext();
 
+  const navigate = useNavigate();
   const [niche, setNiche] = useState("");
   const [growthGoal, setGrowthGoal] = useState("");
 
@@ -69,7 +71,7 @@ export default function TrendsPage() {
           label="Creator niche"
           value={niche}
           onChange={(event) => setNiche(event.target.value)}
-          placeholder="e.g. AI founders weekly, tech mythbusting"
+          placeholder=""
           suggestions={NICHE_SUGGESTIONS}
         />
 
@@ -78,7 +80,7 @@ export default function TrendsPage() {
           label="Growth outcome"
           value={growthGoal}
           onChange={(event) => setGrowthGoal(event.target.value)}
-          placeholder="define the metric Nexus should chase"
+          placeholder=""
           suggestions={GROWTH_SUGGESTIONS}
         />
 
@@ -100,13 +102,13 @@ export default function TrendsPage() {
                 <strong>{trend.title}</strong>
               </header>
               <p>{trend.summary}</p>
-              {trend.source ? (
-                <span className="toast">Source: {trend.source}</span>
-              ) : null}
               <ButtonArrowDown
                 variant="secondary"
                 type="button"
-                onClick={() => setSelectedTrend(trend)}
+                onClick={() => {
+                  setSelectedTrend(trend);
+                  navigate('/script');
+                }}
               >
                 Use this signal
               </ButtonArrowDown>
