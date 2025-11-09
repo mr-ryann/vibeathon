@@ -9,7 +9,10 @@ export default defineConfig({
     host: "0.0.0.0",
     strictPort: true,
     hmr: {
-      clientPort: 5000
+      protocol: 'wss',
+      host: '53f5c5e1-daad-4912-baf8-3021b0947944-00-2ke9oz9rxh47x.sisko.replit.dev',
+      port: 443,
+      clientPort: 443
     },
     allowedHosts: [
       "53f5c5e1-daad-4912-baf8-3021b0947944-00-2ke9oz9rxh47x.sisko.replit.dev",

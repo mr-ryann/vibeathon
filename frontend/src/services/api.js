@@ -1,9 +1,25 @@
 import axios from "axios";
 
 // Backend API URL configuration
-// In development: http://localhost:8000
-// In Replit deployment: will use same domain
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+// In Replit: Use the public domain with port 8000
+// The backend runs on port 8000 which is exposed publicly
+const getApiUrl = () => {
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  
+  // In Replit, construct the backend URL using the current domain
+  if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname;
+    if (hostname.includes('replit.dev')) {
+      return `https://${hostname}:8000`;
+    }
+  }
+  
+  return "http://localhost:8000";
+};
+
+const API_BASE_URL = getApiUrl();
 
 const api = axios.create({
   baseURL: API_BASE_URL,
