@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { MessageCircleHeart } from "lucide-react";
 import { generateScript } from "../services/api.js";
 import { useAppContext } from "../context/AppContext.jsx";
@@ -24,9 +25,20 @@ export default function ScriptPage() {
     isBusy
   } = useAppContext();
 
+  const navigate = useNavigate();
   const [vibe, setVibe] = useState("");
 
   const fallbackTrend = useMemo(() => trends[0] || null, [trends]);
+
+  useEffect(() => {
+    if (trends.length === 0 && !selectedTrend) {
+      setErrorMessage("Please fetch trends first before generating scripts.");
+      const timer = setTimeout(() => {
+        navigate('/trends');
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [trends.length, selectedTrend, navigate, setErrorMessage]);
 
   const handleGenerate = async (event) => {
     event.preventDefault();
