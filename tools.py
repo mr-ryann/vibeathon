@@ -337,11 +337,11 @@ class SponsorFinder:
         Uses Google search to find brands actively sponsoring creators
         """
         
-        query = f"{niche} brand sponsor influencer partnership"
+        query = f"{niche} brand sponsor influencer partnership collaboration"
         
         payload = {
             "q": query,
-            "num": num_sponsors * 2,  # Get extra for filtering
+            "num": num_sponsors * 3,  # Get extra for filtering
             "gl": "us"
         }
         
@@ -359,12 +359,21 @@ class SponsorFinder:
             for result in data.get('organic', []):
                 # Extract potential sponsor info
                 brand_name = self._extract_brand_name(result['title'])
+                website = result.get('link', '')
                 
-                if brand_name:
+                if brand_name and website:
+                    # Extract category from snippet
+                    category = self._extract_category(result.get('snippet', ''), niche)
+                    
+                    # Find contact email for this brand
+                    email = self._find_brand_email(brand_name, website)
+                    
                     sponsors.append({
-                        "brand_name": brand_name,
-                        "website": result.get('link', ''),
+                        "name": brand_name,  # Changed from brand_name to name
+                        "website": website,
                         "description": result.get('snippet', ''),
+                        "category": category,
+                        "email": email,
                         "relevance": self._calculate_brand_relevance(result, niche)
                     })
             
@@ -399,6 +408,78 @@ class SponsorFinder:
                 score += 1.0
         
         return min(score, 10.0)
+    
+    def _extract_category(self, snippet: str, niche: str) -> str:
+        """Extract business category from search snippet"""
+        snippet_lower = snippet.lower()
+        
+        # Common category keywords
+        categories = {
+            'tech': ['technology', 'software', 'app', 'saas', 'digital', 'ai', 'tech'],
+            'fitness': ['fitness', 'health', 'wellness', 'workout', 'gym', 'nutrition'],
+            'beauty': ['beauty', 'cosmetic', 'skincare', 'makeup', 'personal care'],
+            'fashion': ['fashion', 'clothing', 'apparel', 'style', 'wear'],
+            'food': ['food', 'restaurant', 'meal', 'snack', 'beverage', 'drink'],
+            'gaming': ['gaming', 'game', 'esports', 'stream', 'player'],
+            'education': ['education', 'learning', 'course', 'tutorial', 'training'],
+            'finance': ['finance', 'investing', 'money', 'banking', 'payment'],
+        }
+        
+        for category, keywords in categories.items():
+            if any(keyword in snippet_lower for keyword in keywords):
+                return category.capitalize()
+        
+        # Default to niche-based category
+        return niche.split()[0].capitalize()
+    
+    def _find_brand_email(self, brand_name: str, website: str) -> str:
+        """
+        Find contact email using Serper API search
+        """
+        domain = website.replace('https://', '').replace('http://', '').replace('www.', '').split('/')[0]
+        
+        # Search for contact email
+        email_query = f"{brand_name} partnerships email contact sponsorship"
+        
+        try:
+            payload = {
+                "q": email_query,
+                "num": 5,
+                "gl": "us"
+            }
+            
+            headers = {
+                "X-API-KEY": self.serper_key,
+                "Content-Type": "application/json"
+            }
+            
+            response = requests.post("https://google.serper.dev/search", json=payload, headers=headers)
+            response.raise_for_status()
+            data = response.json()
+            
+            # Look for email patterns in results
+            import re
+            email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+            
+            for result in data.get('organic', [])[:5]:
+                snippet = result.get('snippet', '')
+                emails = re.findall(email_pattern, snippet)
+                
+                # Prioritize partnership/marketing emails
+                for email in emails:
+                    email_lower = email.lower()
+                    if any(keyword in email_lower for keyword in ['partner', 'sponsor', 'marketing', 'collab', 'business']):
+                        return email
+                
+                # Return first valid email if no partnership email found
+                if emails:
+                    return emails[0]
+            
+        except Exception as e:
+            print(f"Error finding email for {brand_name}: {e}")
+        
+        # Fallback to common partnership email format
+        return f"partnerships@{domain}"
     
     def find_contact_email(self, brand_website: str) -> Optional[str]:
         """

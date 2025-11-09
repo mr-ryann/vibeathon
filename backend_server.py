@@ -245,27 +245,42 @@ HASHTAGS: {' '.join(['#' + tag for tag in content.hashtags[:5]])}
             num_sponsors=3
         )
         
-        # Format sponsors for frontend
+        # Format sponsors for frontend with personalized email templates
         formatted_sponsors = []
         for sponsor in sponsors[:3]:  # Top 3 sponsors
-            email_template = f"""Subject: Partnership Opportunity - {request.trend.get('title', 'Content')} Creator
+            # Generate personalized email template for each sponsor
+            sponsor_name = sponsor.get('name', 'Unknown Sponsor')
+            sponsor_category = sponsor.get('category', 'General')
+            sponsor_description = sponsor.get('description', '')
+            trend_title = request.trend.get('title', 'content')
+            
+            # Tailor email based on sponsor's category and description
+            email_template = f"""Subject: Partnership Opportunity - {trend_title} Content Creator
 
-Hi {sponsor.get('name', 'there')},
+Hi {sponsor_name} Team,
 
-I create engaging content in the {request.trend.get('title', '')} space and think my audience would love {sponsor.get('name', 'your product')}.
+I'm a content creator specializing in {trend_title}, and I'm reaching out because I believe there's a strong alignment between my audience and {sponsor_name}'s {sponsor_category.lower()} offerings.
 
-My recent content in this niche has been getting strong engagement, and I'd love to explore a partnership opportunity.
+My content focuses on {request.vibe} storytelling that resonates with viewers interested in {trend_title}. I noticed {sponsor_name} {sponsor_description[:100]}... and I think my audience would genuinely value learning about your brand.
 
-Would you be open to a quick call this week?
+Recent Content Performance:
+• Targeting viewers passionate about {trend_title}
+• Creating {request.vibe} content that drives engagement
+• Building an authentic community in this niche
+
+I'd love to explore how we could collaborate on a partnership that brings real value to both your brand and my audience. Would you be open to a brief call this week to discuss potential opportunities?
+
+Looking forward to connecting!
 
 Best regards,
 [Your Name]
+[Your Channel/Profile]
 
-P.S. Check out my latest content: [Your Channel/Profile]"""
+P.S. I'm particularly excited about how {sponsor_name} aligns with my content values in the {sponsor_category.lower()} space."""
             
             formatted_sponsors.append({
-                "name": sponsor.get('name', 'Unknown Sponsor'),
-                "category": sponsor.get('category', 'General'),
+                "name": sponsor_name,
+                "category": sponsor_category,
                 "email": sponsor.get('email', 'info@example.com'),
                 "emailTemplate": email_template,
                 "website": sponsor.get('website', '')
