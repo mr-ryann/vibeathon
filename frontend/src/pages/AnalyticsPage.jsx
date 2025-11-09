@@ -36,8 +36,8 @@ export default function AnalyticsPage() {
   return (
     <section className="card">
       <header className="card__header">
-        <h2>SignalPulse: Performance Loop</h2>
-        <p>Review how Nexus experiments landed so you can feed insights back into tomorrow’s drops.</p>
+        <h2>agent_pulse + agent_envoy: Performance & Partnerships</h2>
+        <p>Track engagement metrics and discover brand partnership opportunities.</p>
       </header>
 
       {isBusy && !stats ? <DotLoader label="Pulling performance metrics" /> : null}

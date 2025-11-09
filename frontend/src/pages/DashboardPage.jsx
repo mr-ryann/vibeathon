@@ -5,30 +5,26 @@ import { useNavigate } from "react-router-dom";
 
 const workflowCards = [
   {
-    title: "BuzzFind",
-    description: "Discover the highest-velocity trends across your niche with ripple, your trend scout.",
-    agent: "ripple",
-    cta: "Explore trends",
+    title: "agent_ripple",
+    description: "Trend scout analyzing viral patterns and discovering high-velocity content opportunities.",
+    cta: "Scout trends",
     to: "/trends"
   },
   {
-    title: "Script Forge",
-    description: "Generate hooks, scripts, captions with quill, your creative writer.",
-    agent: "quill",
-    cta: "Open script lab",
+    title: "agent_quill",
+    description: "Creative writer generating hooks, scripts, and captions in your unique voice.",
+    cta: "Generate script",
     to: "/script"
   },
   {
-    title: "ShareBlast",
-    description: "Clip raw videos into platform-ready shorts powered by core intelligence.",
-    agent: "core",
+    title: "agent_core",
+    description: "Strategic orchestrator processing videos and optimizing content strategy.",
     cta: "Process video",
     to: "/upload"
   },
   {
-    title: "SignalPulse",
-    description: "Track performance with pulse and connect to sponsors via envoy.",
-    agent: "pulse + envoy",
+    title: "agent_pulse + agent_envoy",
+    description: "Engagement tracker (pulse) and brand partnership finder (envoy) working together.",
     cta: "View analytics",
     to: "/analytics"
   }
@@ -61,9 +57,6 @@ export default function DashboardPage() {
           <article key={card.title} className="dashboard-card">
             <header>
               <h3>{card.title}</h3>
-              <span className="toast" style={{ fontSize: '0.75rem', marginTop: '0.25rem' }}>
-                Agent: {card.agent}
-              </span>
             </header>
             <p>{card.description}</p>
             <ButtonArrowDown onClick={() => navigate(card.to)}>{card.cta}</ButtonArrowDown>

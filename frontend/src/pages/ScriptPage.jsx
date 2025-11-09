@@ -58,8 +58,8 @@ export default function ScriptPage() {
   return (
     <section className="card">
       <header className="card__header">
-        <h2>Script Forge: Creative Engine</h2>
-        <p>Select a signal, define the vibe, and Nexus drafts hook-to-CTA copy with sponsor outreach.</p>
+        <h2>agent_quill: Creative Engine</h2>
+        <p>Your AI writer crafting scripts, hooks, and captions in your unique voice.</p>
       </header>
 
       <form onSubmit={handleGenerate} className="field-grid" style={{ marginTop: "1.5rem" }}>

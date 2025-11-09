@@ -59,8 +59,8 @@ export default function TrendsPage() {
   return (
     <section className="card">
       <header className="card__header">
-        <h2>BuzzFind: Trend Intelligence</h2>
-        <p>Feed Nexus your arena and end goal—our scouts surface what deserves your next drop.</p>
+        <h2>agent_ripple: Trend Intelligence</h2>
+        <p>Your AI trend scout analyzing viral patterns to surface high-velocity opportunities.</p>
       </header>
 
       <form onSubmit={handleSubmit} className="field-grid" style={{ marginTop: "1.5rem" }}>
