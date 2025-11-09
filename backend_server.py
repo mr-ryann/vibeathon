@@ -48,7 +48,7 @@ except ImportError as e:
 
 # Initialize FastAPI app
 app = FastAPI(
-    title="VibeOS API",
+    title="Nexus API",
     description="AI Content Co-Founder - Backend API for React Frontend",
     version="3.0.0"
 )
@@ -126,7 +126,7 @@ class AnalyticsResponse(BaseModel):
 async def root():
     """API health check"""
     return {
-        "service": "VibeOS API",
+        "service": "Nexus API",
         "version": "3.0.0",
         "status": "running",
         "frontend": "React + Vite",
@@ -411,7 +411,7 @@ async def get_sponsors(script_id: str):
 async def startup_event():
     """Initialize services on startup"""
     print("=" * 80)
-    print("🚀 VibeOS API Server Starting...")
+    print("🚀 Nexus API Server Starting...")
     print("=" * 80)
     print("")
     print("✅ FastAPI initialized")

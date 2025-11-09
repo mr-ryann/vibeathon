@@ -1,7 +1,7 @@
-# VibeOS - AI Content Creation Platform
+# Nexus - AI Content Creation Platform
 
 ## Overview
-VibeOS is an AI-powered content creation platform that helps creators build their brand on autopilot. The platform combines trend hunting, AI-generated content, and sponsor outreach to help creators grow their audience and revenue.
+Nexus is an AI-powered content creation platform that helps creators build their brand on autopilot. The platform combines trend hunting, AI-generated content, and sponsor outreach to help creators grow their audience and revenue.
 
 **Current State:** Successfully imported and configured for Replit environment.
 

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Backend server launcher for VibeOS
+Backend server launcher for Nexus
 Run this to start the backend API server
 """
 import uvicorn
 
 if __name__ == "__main__":
     print("=" * 80)
-    print("🚀 Starting VibeOS Backend Server")
+    print("🚀 Starting Nexus Backend Server")
     print("=" * 80)
     print("\n📡 Backend will be available at: http://localhost:8000")
     print("📚 API Documentation: http://localhost:8000/docs")
