@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrainCircuit } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { fetchTrends } from "../services/api.js";
@@ -30,8 +30,20 @@ export default function TrendsPage() {
   } = useAppContext();
 
   const navigate = useNavigate();
-  const [niche, setNiche] = useState("");
-  const [growthGoal, setGrowthGoal] = useState("");
+  const [niche, setNiche] = useState(() => {
+    return sessionStorage.getItem('nexus_niche') || '';
+  });
+  const [growthGoal, setGrowthGoal] = useState(() => {
+    return sessionStorage.getItem('nexus_growthGoal') || '';
+  });
+
+  useEffect(() => {
+    sessionStorage.setItem('nexus_niche', niche);
+  }, [niche]);
+
+  useEffect(() => {
+    sessionStorage.setItem('nexus_growthGoal', growthGoal);
+  }, [growthGoal]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

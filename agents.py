@@ -41,7 +41,7 @@ class SponsorPitch(BaseModel):
 class BaseAgent:
     """Base class for all AI agents"""
     
-    def __init__(self, model_name: str = "gemini-pro", temperature: float = 0.7):
+    def __init__(self, model_name: str = "gemini-2.0-flash-exp", temperature: float = 0.7):
         # Configure Gemini instead of Groq
         gemini_key = os.getenv("GEMINI_API_KEY")
         if not gemini_key:

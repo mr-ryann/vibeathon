@@ -26,9 +26,15 @@ export default function ScriptPage() {
   } = useAppContext();
 
   const navigate = useNavigate();
-  const [vibe, setVibe] = useState("");
+  const [vibe, setVibe] = useState(() => {
+    return sessionStorage.getItem('nexus_vibe') || '';
+  });
 
   const fallbackTrend = useMemo(() => trends[0] || null, [trends]);
+
+  useEffect(() => {
+    sessionStorage.setItem('nexus_vibe', vibe);
+  }, [vibe]);
 
   useEffect(() => {
     if (trends.length === 0 && !selectedTrend) {

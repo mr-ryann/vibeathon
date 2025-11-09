@@ -6,7 +6,7 @@ Nexus is an AI-powered content creation platform that helps creators build their
 **Current State:** Successfully imported and configured for Replit environment.
 
 ## Recent Changes
-- **2025-11-09**: Complete agent naming integration
+- **2025-11-09**: Complete agent naming integration + Session storage
   - Renamed all AI agents to new branded names:
     - ripple (trend scout & vibe analyzer)
     - quill (script generator)
@@ -17,6 +17,10 @@ Nexus is an AI-powered content creation platform that helps creators build their
     - Dashboard cards now show: agent_ripple, agent_quill, agent_core, agent_pulse + agent_envoy
     - Page titles updated: "agent_ripple: Trend Intelligence", "agent_quill: Creative Engine", etc.
     - Loading indicators reference specific agents (e.g., "ripple agent scouting live trends")
+  - Fixed Gemini model name to "gemini-2.0-flash-exp" for script generation
+  - Added session storage to preserve text inputs across page reloads:
+    - TrendsPage: niche and growth goal inputs persist
+    - ScriptPage: vibe input persists
   - Fixed TrendHunter.get_best_trends() to accept limit parameter
   - Fixed SERPER_API_KEY environment variable references
 - **2025-11-08**: Initial Replit setup completed
